@@ -20,3 +20,7 @@ sudo -u postgres psql -c "GRANT SELECT,UPDATE,DELETE ON TABLE spatial_ref_sys TO
 sudo -u postgres psql -c "GRANT SELECT,UPDATE,DELETE,INSERT ON TABLE geometry_columns TO osmose;" osmose
 touch ~/.pgpass
 echo "localhost:5432:*:osmose:-osmose-" >> ~/.pgpass
+
+# allow connection to localhost via unix socket
+sudo sed -i -e "s/local   all             all                                     peer/local   all             all                                     md5/g" pg_hba.conf
+sudo /etc/init.d/postgresql reload
